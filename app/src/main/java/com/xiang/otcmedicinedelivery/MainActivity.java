@@ -12,7 +12,7 @@ import android.content.Intent;
 public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
-
+    public String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,30 +21,30 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView1);
         imageView.animate().alpha(0f).setDuration(0);
 
-        imageView = (ImageView)findViewById(R.id.imageView2)
+        imageView = (ImageView)findViewById(R.id.imageView2);
         imageView.animate().alpha(1f).setDuration(800);
-
+        Log.i(TAG,"onCreate");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, MainNenu.class);
+                Intent intent = new Intent(MainActivity.this, MainMenu.class);
                 startActivity(intent);
                 finish();
             }
-        }, delayMillis: 3000);
+        }, 3000);
 
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-        Log.i("MainActivity","onPasue");
+        Log.i(TAG,"onPause");
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        Log.i("MainActivity", "onResume");
+        Log.i(TAG, "onResume");
 
     }
 
