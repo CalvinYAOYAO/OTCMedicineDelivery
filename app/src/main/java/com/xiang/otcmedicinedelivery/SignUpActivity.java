@@ -1,5 +1,6 @@
 package com.xiang.otcmedicinedelivery;
 
+import java.util.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,13 +14,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
 
 
 public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
-    EditText edtEmail, edtPassword;
-    String txtEmail, txtPassword;
+    EditText edtEmail, edtPassword, edtName;
+    String txtEmail, txtPassword, txtName;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +33,17 @@ public class SignUpActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtSignUpEmail);
         edtPassword = findViewById(R.id.edtSignUpPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
+        edtName = findViewById(R.id.edtSignUpName);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 txtEmail = edtEmail.getText().toString().trim();
                 txtPassword = edtPassword.getText().toString().trim();
+                txtName = edtName.getText().toString();
 
                 SignUpUser();
 //                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
@@ -51,11 +58,27 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(SignUpActivity.this, "Sign Up Successful !", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                Map<String, Object> user = new HashMap<>();
+                user.put("FullName", txtName);
+                user.put("Email", txtEmail);
 
+                db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(SignUpActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(SignUpActivity.this, "Error - " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
