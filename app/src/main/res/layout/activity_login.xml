@@ -7,7 +7,7 @@
     tools:context=".LoginActivity">
 
     <Button
-        android:id="@+id/SignUpBtn"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SIGN UP"
@@ -16,11 +16,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInBtn"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
         app:layout_constraintVertical_bias="0.123" />
 
     <Button
-        android:id="@+id/signInBtn"
+        android:id="@+id/btnSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SIGN IN"
@@ -28,11 +28,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignInPassword"
         app:layout_constraintVertical_bias="0.264" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/edtSignInEmail"
         android:layout_width="280dp"
         android:layout_height="64dp"
         android:layout_marginTop="100dp"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/edtSignInPassword"
         android:layout_width="280dp"
         android:layout_height="64dp"
         android:layout_marginTop="80dp"
@@ -55,8 +55,8 @@
         android:hint="  Password"
         android:inputType="textPassword"
         android:singleLine="false"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintEnd_toEndOf="@+id/edtSignInEmail"
+        app:layout_constraintStart_toStartOf="@+id/edtSignInEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignInEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

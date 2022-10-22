@@ -7,20 +7,19 @@
     tools:context=".SignUpActivity">
 
     <Button
-        android:id="@+id/SignUpBtn"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClickSignUp"
         android:text="SIGN UP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpPassword"
         app:layout_constraintVertical_bias="0.274" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/edtSignUpEmail"
         android:layout_width="280dp"
         android:layout_height="64dp"
         android:layout_marginTop="100dp"
@@ -34,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/edtSignUpPassword"
         android:layout_width="280dp"
         android:layout_height="64dp"
         android:layout_marginTop="80dp"
@@ -43,8 +42,8 @@
         android:hint="  Password"
         android:inputType="textPassword"
         android:singleLine="false"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintEnd_toEndOf="@+id/edtSignUpEmail"
+        app:layout_constraintStart_toStartOf="@+id/edtSignUpEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
