@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Map<String, Object> user = new HashMap<>();
-                user.put("FullName", txtName);
+                user.put("Name", txtName);
                 user.put("Email", txtEmail);
 
                 db.collection("users")
