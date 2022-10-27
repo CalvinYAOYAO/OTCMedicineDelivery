@@ -6,6 +6,22 @@
         <entry key="..\:/Users/Lufei/Desktop/BackUp/CSE 5236/Project/OTCMedicineDelivery/app/src/main/res/drawable/background_shape.xml" value="0.1" />
         <entry key="..\:/Users/Lufei/Desktop/BackUp/CSE 5236/Project/OTCMedicineDelivery/app/src/main/res/drawable/btnblueish.xml" value="0.1" />
         <entry key="..\:/Users/Lufei/Desktop/BackUp/CSE 5236/Project/OTCMedicineDelivery/app/src/main/res/drawable/button_shape.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/background_shape.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/btnblueish.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/btnred.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/button_shape.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/rounded_border_edittext.xml" value="0.202" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/layout/activity_nearby_pharm.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.37552083333333336" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_sigu_up.xml" value="0.19010416666666666" />
+        <entry key="app/src/main/res/layout/content_login.xml" value="0.37552083333333336" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.19010416666666666" />
+        <entry key="app/src/main/res/layout/rounded_border_edittext.xml" value="0.1890625" />
       </map>
     </option>
   </component>
