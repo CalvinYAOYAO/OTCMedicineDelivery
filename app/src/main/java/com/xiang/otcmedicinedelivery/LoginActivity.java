@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtSignInEmail);
         edtPassword = findViewById(R.id.edtSignInPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+//        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -40,14 +40,10 @@ public class LoginActivity extends AppCompatActivity {
                 txtPassword = edtPassword.getText().toString().trim();
 
                 if (!TextUtils.isEmpty(txtEmail)) {
-                    if (txtEmail.matches(emailPattern)) {
-                        if (!TextUtils.isEmpty(txtPassword)) {
-                            SignInUser();
-                        } else {
-                            edtPassword.setError("Password Field can't be empty");
-                        }
+                    if (!TextUtils.isEmpty(txtPassword)) {
+                        SignInUser();
                     } else {
-                        edtEmail.setError("Enter a valid Email Address");
+                        edtPassword.setError("Password Field can't be empty");
                     }
                 } else {
                     edtEmail.setError("Email Field can't be empty");
@@ -63,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginActivity.this, "Login Successful !", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                 startActivity(intent);
                 finish();
             }
