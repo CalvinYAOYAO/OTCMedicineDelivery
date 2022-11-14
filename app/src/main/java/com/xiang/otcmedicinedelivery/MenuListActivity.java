@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.xiang.otcmedicinedelivery.adapters.MenuListAdapter;
 import com.xiang.otcmedicinedelivery.model.Menu;
-import com.xiang.otcmedicinedelivery.model.RestaurantModel;
+import com.xiang.otcmedicinedelivery.model.PharmacyModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +35,14 @@ public class MenuListActivity extends AppCompatActivity implements MenuListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_list);
 
-        RestaurantModel restaurantModel = getIntent().getParcelableExtra("RestaurantModel");
+        PharmacyModel pharmacyModel = getIntent().getParcelableExtra("PharmacyModel");
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(restaurantModel.getName());
-        actionBar.setSubtitle(restaurantModel.getAddress());
+        actionBar.setTitle(pharmacyModel.getName());
+        actionBar.setSubtitle(pharmacyModel.getAddress());
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-        menuList = restaurantModel.getMenus();
+        menuList = pharmacyModel.getMenus();
         initRecyclerView();
 
 
@@ -54,10 +54,11 @@ public class MenuListActivity extends AppCompatActivity implements MenuListAdapt
                     Toast.makeText(MenuListActivity.this, "Please add some items in cart.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                restaurantModel.setMenus(itemsInCartList);
-                Intent i = new Intent(MenuListActivity.this, PharmacyActivity.class);
-                i.putExtra("RestaurantModel", restaurantModel);
-                startActivityForResult(i, 1000);
+                pharmacyModel.setMenus(itemsInCartList);
+                Intent i = new Intent(MenuListActivity.this, PlaceYourOrderActivity.class);
+                i.putExtra("PharmacyModel", pharmacyModel);
+//                startActivityForResult(i, 1000);
+                startActivity(i);
             }
         });
     }

@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 
-import com.xiang.otcmedicinedelivery.adapters.RestaurantListAdapter;
-import com.xiang.otcmedicinedelivery.model.RestaurantModel;
+import com.xiang.otcmedicinedelivery.adapters.PharmacyListAdapter;
+import com.xiang.otcmedicinedelivery.model.PharmacyModel;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -27,7 +27,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
 
-public class PharmacyActivity extends AppCompatActivity implements RestaurantListAdapter.RestaurantListClickListener{
+public class PharmacyActivity extends AppCompatActivity implements PharmacyListAdapter.RestaurantListClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +35,22 @@ public class PharmacyActivity extends AppCompatActivity implements RestaurantLis
         setContentView(R.layout.activity_pharmacy);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Restaurant List");
+        actionBar.setTitle("Pharmacy List");
 
-        List<RestaurantModel> restaurantModelList =  getRestaurantData();
+        List<PharmacyModel> pharmacyModelList =  getPharmacyData();
 
-        initRecyclerView(restaurantModelList);
+        initRecyclerView(pharmacyModelList);
     }
 
-    private void initRecyclerView(List<RestaurantModel> restaurantModelList ) {
+    private void initRecyclerView(List<PharmacyModel> pharmacyModelList) {
         RecyclerView recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RestaurantListAdapter adapter = new RestaurantListAdapter(restaurantModelList, this);
+        PharmacyListAdapter adapter = new PharmacyListAdapter(pharmacyModelList, this);
         recyclerView.setAdapter(adapter);
     }
 
-    private List<RestaurantModel> getRestaurantData() {
+    private List<PharmacyModel> getPharmacyData() {
+        //TODO: use firebase to retrive data
         InputStream is = getResources().openRawResource(R.raw.restaurent);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -65,17 +66,17 @@ public class PharmacyActivity extends AppCompatActivity implements RestaurantLis
 
         String jsonStr = writer.toString();
         Gson gson = new Gson();
-        RestaurantModel[] restaurantModels =  gson.fromJson(jsonStr, RestaurantModel[].class);
-        List<RestaurantModel> restList = Arrays.asList(restaurantModels);
+        PharmacyModel[] pharmacyModels =  gson.fromJson(jsonStr, PharmacyModel[].class);
+        List<PharmacyModel> restList = Arrays.asList(pharmacyModels);
 
         return  restList;
 
     }
 
     @Override
-    public void onItemClick(RestaurantModel restaurantModel) {
+    public void onItemClick(PharmacyModel pharmacyModel) {
         Intent intent = new Intent(PharmacyActivity.this, MenuListActivity.class);
-        intent.putExtra("RestaurantModel", restaurantModel);
+        intent.putExtra("PharmacyModel", pharmacyModel);
         startActivity(intent);
 
     }

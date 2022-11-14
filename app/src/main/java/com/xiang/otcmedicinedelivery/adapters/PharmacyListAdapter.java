@@ -10,23 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xiang.otcmedicinedelivery.R;
-import com.xiang.otcmedicinedelivery.model.RestaurantModel;
+import com.xiang.otcmedicinedelivery.model.PharmacyModel;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder> {
+public class PharmacyListAdapter extends RecyclerView.Adapter<PharmacyListAdapter.MyViewHolder> {
 
-    private List<RestaurantModel> restaurantModelList;
+    private List<PharmacyModel> pharmacyModelList;
     private RestaurantListClickListener clickListener;
 
-    public RestaurantListAdapter(List<RestaurantModel> restaurantModelList, RestaurantListClickListener clickListener) {
-        this.restaurantModelList = restaurantModelList;
+    public PharmacyListAdapter(List<PharmacyModel> pharmacyModelList, RestaurantListClickListener clickListener) {
+        this.pharmacyModelList = pharmacyModelList;
         this.clickListener = clickListener;
     }
 
-    public void updateData(List<RestaurantModel> restaurantModelList) {
-        this.restaurantModelList = restaurantModelList;
+    public void updateData(List<PharmacyModel> pharmacyModelList) {
+        this.pharmacyModelList = pharmacyModelList;
         notifyDataSetChanged();
     }
 
@@ -39,44 +39,44 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.restaurantName.setText(restaurantModelList.get(position).getName());
-        holder.restaurantAddress.setText("Address: "+restaurantModelList.get(position).getAddress());
-        holder.restaurantHours.setText("Today's hours: " + restaurantModelList.get(position).getHours().getTodaysHours());
+        holder.restaurantName.setText(pharmacyModelList.get(position).getName());
+        holder.restaurantAddress.setText("Address: "+ pharmacyModelList.get(position).getAddress());
+//        holder.restaurantHours.setText("Today's hours: " + pharmacyModelList.get(position).getHours().getTodaysHours());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onItemClick(restaurantModelList.get(position));
+                clickListener.onItemClick(pharmacyModelList.get(position));
             }
         });
         Glide.with(holder.thumbImage)
-                .load(restaurantModelList.get(position).getImage())
+                .load(pharmacyModelList.get(position).getImage())
                 .into(holder.thumbImage);
 
     }
 
     @Override
     public int getItemCount() {
-        return restaurantModelList.size();
+        return pharmacyModelList.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView  restaurantName;
         TextView  restaurantAddress;
-        TextView  restaurantHours;
+//        TextView  restaurantHours;
         ImageView thumbImage;
 
         public MyViewHolder(View view) {
             super(view);
             restaurantName = view.findViewById(R.id.restaurantName);
             restaurantAddress = view.findViewById(R.id.restaurantAddress);
-            restaurantHours = view.findViewById(R.id.restaurantHours);
+//            restaurantHours = view.findViewById(R.id.restaurantHours);
             thumbImage = view.findViewById(R.id.thumbImage);
 
         }
     }
 
     public interface RestaurantListClickListener {
-        public void onItemClick(RestaurantModel restaurantModel);
+        public void onItemClick(PharmacyModel pharmacyModel);
     }
 }
