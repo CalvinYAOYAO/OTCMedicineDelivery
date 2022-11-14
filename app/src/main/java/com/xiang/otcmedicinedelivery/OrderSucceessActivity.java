@@ -1,9 +1,13 @@
 package com.xiang.otcmedicinedelivery;
 
 import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,5 +35,30 @@ public class OrderSucceessActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Home:
+                Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.Profile:
+                Toast.makeText(this, "Profile selected", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.Order:
+                Toast.makeText(this, "Order selected", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                //do nothing
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
