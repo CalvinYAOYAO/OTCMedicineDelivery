@@ -13,8 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OTCMedicineDelivery"
         tools:targetApi="31">
+        <activity android:name=".OrderSucceessActivity"></activity>
+        <activity android:name=".CheckOutActivity" />
         <activity
-            android:name=".BottomNavigationActivity"
+            android:name=".MenuListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".PharmacyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
