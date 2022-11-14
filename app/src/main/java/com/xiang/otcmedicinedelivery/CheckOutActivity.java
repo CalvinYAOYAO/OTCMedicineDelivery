@@ -79,6 +79,7 @@ public class CheckOutActivity extends AppCompatActivity {
             return;
         }
         //start success activity..
+        //TODO: upload order data to firestore
         Intent i = new Intent(CheckOutActivity.this, OrderSucceessActivity.class);
         i.putExtra("PharmacyModel", PharmacyModel);
         startActivityForResult(i, 1000);

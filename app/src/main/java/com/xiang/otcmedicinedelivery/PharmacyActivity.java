@@ -51,7 +51,7 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
 
     private List<PharmacyModel> getPharmacyData() {
         //TODO: use firebase to retrive data
-        InputStream is = getResources().openRawResource(R.raw.restaurent);
+        InputStream is = getResources().openRawResource(R.raw.pharmacy);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try{
