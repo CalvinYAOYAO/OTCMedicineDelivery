@@ -18,8 +18,8 @@
         android:title="Profile" />
 
 
-    <item
-        android:id="@+id/Cart"
-        android:icon="@drawable/ic_baseline_shopping_cart_24"
-        android:title="Cart" />
+<!--    <item-->
+<!--        android:id="@+id/Cart"-->
+<!--        android:icon="@drawable/ic_baseline_shopping_cart_24"-->
+<!--        android:title="Cart" />-->
 </menu>
