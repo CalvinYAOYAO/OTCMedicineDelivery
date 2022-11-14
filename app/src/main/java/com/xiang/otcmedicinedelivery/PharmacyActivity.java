@@ -1,19 +1,15 @@
 package com.xiang.otcmedicinedelivery;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.xiang.otcmedicinedelivery.adapters.RestaurantListAdapter;
 import com.xiang.otcmedicinedelivery.model.RestaurantModel;
@@ -25,12 +21,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 public class PharmacyActivity extends AppCompatActivity implements RestaurantListAdapter.RestaurantListClickListener{
@@ -80,7 +74,7 @@ public class PharmacyActivity extends AppCompatActivity implements RestaurantLis
 
     @Override
     public void onItemClick(RestaurantModel restaurantModel) {
-        Intent intent = new Intent(PharmacyActivity.this, ProductListActivity.class);
+        Intent intent = new Intent(PharmacyActivity.this, MenuListActivity.class);
         intent.putExtra("RestaurantModel", restaurantModel);
         startActivity(intent);
 
