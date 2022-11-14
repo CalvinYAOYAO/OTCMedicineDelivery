@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,7 +20,7 @@ import com.xiang.otcmedicinedelivery.adapters.PlaceYourOrderAdapter;
 import com.xiang.otcmedicinedelivery.model.Menu;
 import com.xiang.otcmedicinedelivery.model.PharmacyModel;
 
-public class PlaceYourOrderActivity extends AppCompatActivity {
+public class CheckOutActivity extends AppCompatActivity {
 
     private EditText inputName, inputAddress, inputCardNumber;
     private RecyclerView cartItemsRecyclerView;
@@ -31,7 +30,7 @@ public class PlaceYourOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place_your_order);
+        setContentView(R.layout.activity_check_out);
 
         PharmacyModel PharmacyModel = getIntent().getParcelableExtra("PharmacyModel");
         ActionBar actionBar = getSupportActionBar();
@@ -54,8 +53,6 @@ public class PlaceYourOrderActivity extends AppCompatActivity {
                 onPlaceOrderButtonClick(PharmacyModel);
             }
         });
-
-
         initRecyclerView(PharmacyModel);
         calculateTotalAmount(PharmacyModel);
     }
@@ -80,7 +77,7 @@ public class PlaceYourOrderActivity extends AppCompatActivity {
             return;
         }
         //start success activity..
-        Intent i = new Intent(PlaceYourOrderActivity.this, OrderSucceessActivity.class);
+        Intent i = new Intent(CheckOutActivity.this, OrderSucceessActivity.class);
         i.putExtra("PharmacyModel", PharmacyModel);
         startActivityForResult(i, 1000);
     }

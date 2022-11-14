@@ -55,7 +55,7 @@ public class MenuListActivity extends AppCompatActivity implements MenuListAdapt
                     return;
                 }
                 pharmacyModel.setMenus(itemsInCartList);
-                Intent i = new Intent(MenuListActivity.this, PlaceYourOrderActivity.class);
+                Intent i = new Intent(MenuListActivity.this, CheckOutActivity.class);
                 i.putExtra("PharmacyModel", pharmacyModel);
 //                startActivityForResult(i, 1000);
                 startActivity(i);
