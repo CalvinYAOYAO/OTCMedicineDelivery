@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.xiang.otcmedicinedelivery.adapters.MenuListAdapter;
 import com.xiang.otcmedicinedelivery.model.Menu;
 import com.xiang.otcmedicinedelivery.model.PharmacyModel;
@@ -30,6 +31,7 @@ public class MenuListActivity extends AppCompatActivity implements MenuListAdapt
     private List<Menu> itemsInCartList;
     private int totalItemInCart = 0;
     private TextView buttonCheckout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,4 +152,6 @@ public class MenuListActivity extends AppCompatActivity implements MenuListAdapt
             finish();
         }
     }
+
+
 }

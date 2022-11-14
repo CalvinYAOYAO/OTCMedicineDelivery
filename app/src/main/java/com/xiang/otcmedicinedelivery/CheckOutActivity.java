@@ -18,26 +18,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.xiang.otcmedicinedelivery.adapters.PlaceYourOrderAdapter;
 import com.xiang.otcmedicinedelivery.model.Menu;
 import com.xiang.otcmedicinedelivery.model.PharmacyModel;
 
-public class CheckOutActivity extends AppCompatActivity {
+import java.util.*;
 
+public class CheckOutActivity extends AppCompatActivity {
+    private static final String TAG = "CheckOutActivity";
     private EditText inputName, inputAddress, inputCardNumber;
     private RecyclerView cartItemsRecyclerView;
     private TextView tvTotalAmount, buttonPlaceYourOrder;
     private PlaceYourOrderAdapter placeYourOrderAdapter;
+    private float totalAmount = 0;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
 
-        PharmacyModel PharmacyModel = getIntent().getParcelableExtra("PharmacyModel");
+        PharmacyModel pharmacyModel = getIntent().getParcelableExtra("PharmacyModel");
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(PharmacyModel.getName());
-        actionBar.setSubtitle(PharmacyModel.getAddress());
+        actionBar.setTitle(pharmacyModel.getName());
+        actionBar.setSubtitle(pharmacyModel.getAddress());
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         inputName = findViewById(R.id.inputName);
@@ -52,22 +61,22 @@ public class CheckOutActivity extends AppCompatActivity {
         buttonPlaceYourOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPlaceOrderButtonClick(PharmacyModel);
+                onPlaceOrderButtonClick(pharmacyModel);
             }
         });
-        initRecyclerView(PharmacyModel);
-        calculateTotalAmount(PharmacyModel);
+        initRecyclerView(pharmacyModel);
+        calculateTotalAmount(pharmacyModel);
     }
 
-    private void calculateTotalAmount(PharmacyModel PharmacyModel) {
-        float TotalAmount = 0f;
-        for(Menu m : PharmacyModel.getMenus()) {
-            TotalAmount += m.getPrice() * m.getTotalInCart();
+    private void calculateTotalAmount(PharmacyModel pharmacyModel) {
+        totalAmount = 0f;
+        for(Menu m : pharmacyModel.getMenus()) {
+            totalAmount += m.getPrice() * m.getTotalInCart();
         }
-        tvTotalAmount.setText("$"+String.format("%.2f", TotalAmount));
+        tvTotalAmount.setText("$"+String.format("%.2f", totalAmount));
     }
 
-    private void onPlaceOrderButtonClick(PharmacyModel PharmacyModel) {
+    private void onPlaceOrderButtonClick(PharmacyModel pharmacyModel) {
         if(TextUtils.isEmpty(inputName.getText().toString())) {
             inputName.setError("Please enter name ");
             return;
@@ -80,14 +89,15 @@ public class CheckOutActivity extends AppCompatActivity {
         }
         //start success activity..
         //TODO: upload order data to firestore
+        saveData(pharmacyModel);
         Intent i = new Intent(CheckOutActivity.this, OrderSucceessActivity.class);
-        i.putExtra("PharmacyModel", PharmacyModel);
+        i.putExtra("PharmacyModel", pharmacyModel);
         startActivityForResult(i, 1000);
     }
 
-    private void initRecyclerView(PharmacyModel PharmacyModel) {
+    private void initRecyclerView(PharmacyModel pharmacyModel) {
         cartItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        placeYourOrderAdapter = new PlaceYourOrderAdapter(PharmacyModel.getMenus());
+        placeYourOrderAdapter = new PlaceYourOrderAdapter(pharmacyModel.getMenus());
         cartItemsRecyclerView.setAdapter(placeYourOrderAdapter);
     }
 
@@ -133,5 +143,29 @@ public class CheckOutActivity extends AppCompatActivity {
         super.onBackPressed();
         setResult(Activity.RESULT_CANCELED);
         finish();
+    }
+
+
+    private void saveData(PharmacyModel pharmacyModel) {
+        Map<String, Object> order = new HashMap<>();
+        order.put("name", inputName.getText().toString());
+        order.put("card_num", inputAddress.getText().toString());
+        order.put("address", inputCardNumber.getText().toString());
+        order.put("totalAmount", totalAmount);
+        order.put("items", pharmacyModel.getMenus());
+        db.collection("Orders")
+                .add(order)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 }

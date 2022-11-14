@@ -106,5 +106,6 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
     }
 
 
+
 }
 
