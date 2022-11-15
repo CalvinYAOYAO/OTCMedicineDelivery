@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,8 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Pharmacy List");
+        List<PharmacyModel> pharmacyModelList =  new ArrayList<>();
+//        initRecyclerView(pharmacyModelList);
 
 //        pharmacyRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
 //            @Override
@@ -65,9 +68,24 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
 //            }
 //        });
 
-        List<PharmacyModel> pharmacyModelList =  getPharmacyData();
+        db.collection("Pharmacy").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot snapshots : queryDocumentSnapshots) {
+                            PharmacyModel pharm = snapshots.toObject(PharmacyModel.class);
+                            pharmacyModelList.add(pharm);
+                        }
+                        initRecyclerView(pharmacyModelList);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-        initRecyclerView(pharmacyModelList);
+                    }
+                });
+
     }
 
     private void initRecyclerView(List<PharmacyModel> pharmacyModelList) {
@@ -77,47 +95,48 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
         recyclerView.setAdapter(adapter);
     }
 
-    private List<PharmacyModel> getPharmacyData() {
-        InputStream is = getResources().openRawResource(R.raw.pharmacy);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try{
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while(( n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0,n);
-            }
-        }catch (Exception e) {
-
-        }
-
-        String jsonStr = writer.toString();
-        Gson gson = new Gson();
-        PharmacyModel[] pharmacyModels =  gson.fromJson(jsonStr, PharmacyModel[].class);
-        List<PharmacyModel> restList = Arrays.asList(pharmacyModels);
-
-//        //todo: need to be delete
-//        for (PharmacyModel foo : restList) {
-//            db.collection("Pharmacy")
-//                    .document("list")
-//                    .set(foo)
-//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void aVoid) {
-//                    Log.d(TAG, "upload success");
-//                }
-//            })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
+//    private List<PharmacyModel> getPharmacyData() {
+//        InputStream is = getResources().openRawResource(R.raw.pharmacy);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try{
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while(( n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0,n);
+//            }
+//        }catch (Exception e) {
 //
-//                            Log.d(TAG, e.toString());
-//                        }
-//                    });
 //        }
-
-        return  restList;
-    }
+//
+//        String jsonStr = writer.toString();
+//        Gson gson = new Gson();
+//        PharmacyModel[] pharmacyModels =  gson.fromJson(jsonStr, PharmacyModel[].class);
+//        List<PharmacyModel> restList = Arrays.asList(pharmacyModels);
+//
+////        //todo: need to be delete
+////        for (PharmacyModel foo : restList) {
+////            db.collection("Pharmacy")
+////                    .add(foo);
+////        }
+//
+////                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+////                @Override
+////                public void onSuccess(Void aVoid) {
+////                    Log.d(TAG, "upload success");
+////                }
+////            })
+////                    .addOnFailureListener(new OnFailureListener() {
+////                        @Override
+////                        public void onFailure(@NonNull Exception e) {
+////
+////                            Log.d(TAG, e.toString());
+////                        }
+////                    });
+////        }
+//
+//        return  restList;
+//    }
 
     @Override
     public void onItemClick(PharmacyModel pharmacyModel) {
@@ -138,17 +157,17 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Home:
-                Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PharmacyActivity.this, PharmacyActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
-            case R.id.Profile:
-                Toast.makeText(this, "Profile selected", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.Order:
+            case R.id.Map:
                 Toast.makeText(this, "Order selected", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
 

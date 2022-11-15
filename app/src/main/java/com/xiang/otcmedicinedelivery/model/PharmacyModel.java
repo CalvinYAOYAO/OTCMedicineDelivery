@@ -10,6 +10,8 @@ public class PharmacyModel implements Parcelable {
     private String name;
     private String address;
     private String image;
+    private float latitude;
+    private float longitude;
     private List<Menu> menus;
 
     public PharmacyModel() {};

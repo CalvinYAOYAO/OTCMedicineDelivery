@@ -123,17 +123,17 @@ public class CheckOutActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home :
                 finish();
+                break;
             case R.id.Home:
-                Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CheckOutActivity.this, PharmacyActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
-            case R.id.Profile:
-                Toast.makeText(this, "Profile selected", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.Order:
+            case R.id.Map:
                 Toast.makeText(this, "Order selected", Toast.LENGTH_SHORT).show();
                 return true;
             default:
-                //do nothing
+                return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
