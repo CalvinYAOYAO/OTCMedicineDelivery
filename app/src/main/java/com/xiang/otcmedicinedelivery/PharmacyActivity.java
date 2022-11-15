@@ -1,5 +1,6 @@
 package com.xiang.otcmedicinedelivery;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -22,12 +23,22 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
 
+import android.util.Log;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.firestore.*;
+
 public class PharmacyActivity extends AppCompatActivity implements PharmacyListAdapter.RestaurantListClickListener{
+    private static final String TAG = "CheckOutActivity";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference pharmacyRef = db.collection("Pharmacy").document("n7U5Q6qQvQAUaSp9K5pp");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,23 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Pharmacy List");
+
+//        pharmacyRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                if (documentSnapshot.exists()) {
+//                    List<Object> foo = (List<Object>) documentSnapshot.get("pharmacylist");
+//                    Log.d(TAG, "get data success");
+//                }else {
+//                    Log.d(TAG, "no data exist");
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "onFailure: " + e.toString());
+//            }
+//        });
 
         List<PharmacyModel> pharmacyModelList =  getPharmacyData();
 
@@ -50,7 +78,6 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
     }
 
     private List<PharmacyModel> getPharmacyData() {
-        //TODO: use firebase to retrive data
         InputStream is = getResources().openRawResource(R.raw.pharmacy);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -69,8 +96,27 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
         PharmacyModel[] pharmacyModels =  gson.fromJson(jsonStr, PharmacyModel[].class);
         List<PharmacyModel> restList = Arrays.asList(pharmacyModels);
 
-        return  restList;
+//        //todo: need to be delete
+//        for (PharmacyModel foo : restList) {
+//            db.collection("Pharmacy")
+//                    .document("list")
+//                    .set(foo)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Log.d(TAG, "upload success");
+//                }
+//            })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//
+//                            Log.d(TAG, e.toString());
+//                        }
+//                    });
+//        }
 
+        return  restList;
     }
 
     @Override
@@ -104,6 +150,7 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 
 

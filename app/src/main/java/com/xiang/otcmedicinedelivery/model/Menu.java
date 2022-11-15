@@ -9,6 +9,8 @@ public class Menu implements Parcelable {
     private int totalInCart;
     private String url;
 
+    public Menu() {};
+
     public int getTotalInCart() {
         return totalInCart;
     }

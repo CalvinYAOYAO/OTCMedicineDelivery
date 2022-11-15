@@ -10,8 +10,9 @@ public class PharmacyModel implements Parcelable {
     private String name;
     private String address;
     private String image;
-    private float delivery_charge;
     private List<Menu> menus;
+
+    public PharmacyModel() {};
 
     public String getName() {
         return name;
@@ -37,15 +38,6 @@ public class PharmacyModel implements Parcelable {
         this.image = image;
     }
 
-    public float getDelivery_charge() {
-        return delivery_charge;
-    }
-
-    public void setDelivery_charge(float delivery_charge) {
-        this.delivery_charge = delivery_charge;
-    }
-
-
     public List<Menu> getMenus() {
         return menus;
     }
@@ -58,7 +50,6 @@ public class PharmacyModel implements Parcelable {
         name = in.readString();
         address = in.readString();
         image = in.readString();
-        delivery_charge = in.readFloat();
         menus = in.createTypedArrayList(Menu.CREATOR);
     }
 
@@ -84,7 +75,6 @@ public class PharmacyModel implements Parcelable {
         dest.writeString(name);
         dest.writeString(address);
         dest.writeString(image);
-        dest.writeFloat(delivery_charge);
         dest.writeTypedList(menus);
     }
 }
