@@ -33,7 +33,6 @@ public class SignUpActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtSignUpEmail);
         edtPassword = findViewById(R.id.edtSignUpPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
-        edtName = findViewById(R.id.edtSignUpName);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -43,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 txtEmail = edtEmail.getText().toString().trim();
                 txtPassword = edtPassword.getText().toString().trim();
-                txtName = edtName.getText().toString();
 
                 SignUpUser();
 //                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
@@ -58,27 +56,10 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Map<String, Object> user = new HashMap<>();
-                user.put("Name", txtName);
-                user.put("Email", txtEmail);
-
-                db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(SignUpActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(SignUpActivity.this, "Error - " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                Toast.makeText(SignUpActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
