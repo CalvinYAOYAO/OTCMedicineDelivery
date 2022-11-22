@@ -151,7 +151,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot snapshots : queryDocumentSnapshots) {
                             PharmacyModel pharm = snapshots.toObject(PharmacyModel.class);
-                            pharmacyModelList.add(pharm);
+                            LatLng drugStore = new LatLng(pharm.getLatitude(), pharm.getLongitude());
+                            Marker marker = map.addMarker(new MarkerOptions().position(drugStore).title(pharm.getName()));
+                            marker.showInfoWindow();
+                            map.moveCamera(CameraUpdateFactory.newLatLng(drugStore));
                         }
                     }
                 })
@@ -162,12 +165,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
 
-        for (PharmacyModel pharm : pharmacyModelList) {
-            LatLng drugStore = new LatLng(pharm.getLatitude(), pharm.getLongitude());
-            Marker marker = map.addMarker(new MarkerOptions().position(drugStore).title(pharm.getName()));
-            marker.showInfoWindow();
-            map.moveCamera(CameraUpdateFactory.newLatLng(drugStore));
-        }
+
 
     }
 

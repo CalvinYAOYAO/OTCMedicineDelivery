@@ -10,13 +10,13 @@ public class PharmacyModel implements Parcelable {
     private String name;
     private String address;
     private String image;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private List<Menu> menus;
 
     public PharmacyModel() {};
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -24,7 +24,7 @@ public class PharmacyModel implements Parcelable {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
