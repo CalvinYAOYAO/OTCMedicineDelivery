@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.multidex.BuildConfig;
+//import androidx.multidex.BuildConfig;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,10 +24,24 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.xiang.otcmedicinedelivery.databinding.ActivityMapsBinding;
+
+import android.content.Intent;
+import com.xiang.otcmedicinedelivery.adapters.PharmacyListAdapter;
+import com.xiang.otcmedicinedelivery.model.PharmacyModel;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import com.google.firebase.firestore.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = MapsActivity.class.getSimpleName();
@@ -40,6 +54,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    List<PharmacyModel> pharmacyModelList =  new ArrayList<>();
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted. 40.02346843370904, -83.01376420765304 lavash cafe
@@ -61,6 +77,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Available Pharmacies");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //binding = ActivityMapsBinding.inflate(getLayoutInflater());
         //setContentView(binding.getRoot());
@@ -113,18 +133,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-        // Add a marker to drug stores nearby and move the camera
-        // 40.01801851275852, -83.01187628418282 cvs1
-        LatLng drugStore1 = new LatLng(40.018, -83.011);
-        Marker marker1 = map.addMarker(new MarkerOptions().position(drugStore1).title("Giant Eagle"));
-        marker1.showInfoWindow();
-        map.moveCamera(CameraUpdateFactory.newLatLng(drugStore1));
+//        // Add a marker to drug stores nearby and move the camera
+//        // 40.01801851275852, -83.01187628418282 cvs1
+//        LatLng drugStore1 = new LatLng(40.018, -83.011);
+//        Marker marker1 = map.addMarker(new MarkerOptions().position(drugStore1).title("Giant Eagle"));
+//        marker1.showInfoWindow();
+//        map.moveCamera(CameraUpdateFactory.newLatLng(drugStore1));
+//
+//        // 40.00776343063699, -83.00904387147222 cvs2
+//        LatLng drugStore2 = new LatLng(40.020, -83.009);
+//        Marker marker2 = map.addMarker(new MarkerOptions().position(drugStore2).title("CVS"));
+//        marker2.showInfoWindow();
+//        map.moveCamera(CameraUpdateFactory.newLatLng(drugStore2));
+        db.collection("Pharmacy").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot snapshots : queryDocumentSnapshots) {
+                            PharmacyModel pharm = snapshots.toObject(PharmacyModel.class);
+                            pharmacyModelList.add(pharm);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-        // 40.00776343063699, -83.00904387147222 cvs2
-        LatLng drugStore2 = new LatLng(40.020, -83.009);
-        Marker marker2 = map.addMarker(new MarkerOptions().position(drugStore2).title("CVS"));
-        marker2.showInfoWindow();
-        map.moveCamera(CameraUpdateFactory.newLatLng(drugStore2));
+                    }
+                });
+
+        for (PharmacyModel pharm : pharmacyModelList) {
+            LatLng drugStore = new LatLng(pharm.getLatitude(), pharm.getLongitude());
+            Marker marker = map.addMarker(new MarkerOptions().position(drugStore).title(pharm.getName()));
+            marker.showInfoWindow();
+            map.moveCamera(CameraUpdateFactory.newLatLng(drugStore));
+        }
 
     }
 
@@ -236,5 +279,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(MapsActivity.this, PharmacyActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

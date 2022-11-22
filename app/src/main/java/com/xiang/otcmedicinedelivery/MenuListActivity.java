@@ -130,12 +130,14 @@ public class MenuListActivity extends AppCompatActivity implements MenuListAdapt
                 finish();
                 break;
             case R.id.Home:
-                Intent intent = new Intent(MenuListActivity.this, PharmacyActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(MenuListActivity.this, PharmacyActivity.class);
+                startActivity(intent1);
                 finish();
                 return true;
             case R.id.Map:
-                Toast.makeText(this, "Order selected", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(MenuListActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

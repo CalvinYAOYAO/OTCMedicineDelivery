@@ -86,6 +86,8 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
                     }
                 });
 
+
+
     }
 
     private void initRecyclerView(List<PharmacyModel> pharmacyModelList) {
@@ -157,12 +159,14 @@ public class PharmacyActivity extends AppCompatActivity implements PharmacyListA
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Home:
-                Intent intent = new Intent(PharmacyActivity.this, PharmacyActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(PharmacyActivity.this, MenuListActivity.class);
+                startActivity(intent1);
                 finish();
                 return true;
             case R.id.Map:
-                Toast.makeText(this, "Order selected", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(PharmacyActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

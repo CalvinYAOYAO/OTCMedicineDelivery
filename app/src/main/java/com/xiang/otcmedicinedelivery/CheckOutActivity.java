@@ -125,12 +125,14 @@ public class CheckOutActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.Home:
-                Intent intent = new Intent(CheckOutActivity.this, PharmacyActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(CheckOutActivity.this, PharmacyActivity.class);
+                startActivity(intent1);
                 finish();
                 return true;
             case R.id.Map:
-                Toast.makeText(this, "Order selected", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(CheckOutActivity.this, MapsActivity.class);
+                startActivity(intent2);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
